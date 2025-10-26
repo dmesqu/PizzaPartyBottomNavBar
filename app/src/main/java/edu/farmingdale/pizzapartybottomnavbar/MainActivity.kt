@@ -23,9 +23,7 @@ class MainActivity : ComponentActivity() {
             PizzaPartyBottomNavBarTheme {
                 val navController: NavHostController = rememberNavController()
                 var buttonsVisible by remember { mutableStateOf(true) }
-
                 Scaffold(
-
                     bottomBar = {
                         if (buttonsVisible) {
                             BottomBar(
@@ -34,18 +32,21 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier
                             )
                         }
-                    }) { paddingValues ->
+                    }
+                ) { paddingValues ->
                     Box(
                         modifier = Modifier.padding(paddingValues)
                     ) {
-                        NavigationGraph(navController = navController) {
-                                isVisible ->
-                            buttonsVisible = isVisible
-                        }
+                        // my solution todo8:
+                        NavigationGraphWithDrawer(
+                            navController = navController,
+                            onBottomBarVisibilityChanged = { isVisible ->
+                                buttonsVisible = isVisible
+                            }
+                        )
                     }
                 }
             }
         }
     }
-
 }

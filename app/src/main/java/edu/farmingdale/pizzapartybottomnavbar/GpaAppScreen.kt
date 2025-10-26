@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 
 // ToDo 5:  Add the GpaAppScreen composable button that clears the input fields when clicked
 
-
 @Composable
 fun GpaAppScreen() {
 
@@ -27,39 +26,51 @@ fun GpaAppScreen() {
     var grade2 by remember { mutableStateOf("") }
     var grade3 by remember { mutableStateOf("") }
 
-
     // Declare variables for GPA result and background color
     var gpa by remember { mutableStateOf("") }
     var backColor by remember { mutableStateOf(Color.White) }
     var btnLabel by remember { mutableStateOf("Calulate GPA") }
-
     Column(
+        // my solution todo4:
         modifier = Modifier
-        ,verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
+            .background(Color.Cyan)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         TextField(
             value = grade1,
-            onValueChange = { grade1 = it },Modifier.padding(16.dp),
-            label = { Text("Course 1 Grade")}
+            onValueChange = { grade1 = it },
+            // my solution todo4:
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            label = { Text("Course 1 Grade") },
+            // my solution todo4:
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
-
-
         TextField(
             value = grade2,
             onValueChange = { grade2 = it },
+            // my solution todo4:
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
             label = { Text("Course 2 Grade") },
+            // my solution todo4:
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
-
-
-
         TextField(
             value = grade3,
             onValueChange = { grade3 = it },
+            // my solution todo4:
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
             label = { Text("Course 3 Grade") },
+            // my solution todo4:
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
-
-
         Button(onClick = {
             if (btnLabel == "Compute GPA") {
 
@@ -89,19 +100,29 @@ fun GpaAppScreen() {
         }, modifier = Modifier.padding(top = 56.dp)) {
             Text(btnLabel)
         }
-
-
+        // my solution todo5:
+        Button(
+            onClick = {
+                grade1 = ""
+                grade2 = ""
+                grade3 = ""
+                gpa = ""
+                backColor = Color.White
+                btnLabel = "Compute GPA"
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        ) {
+            Text("Clear Fields")
+        }
         if (gpa.isNotEmpty()) {
             Text(text = "GPA: $gpa")
         }
-
-
     }
 }
-
 
 fun calGPA(grade1: String, grade2: String, grade3: String): Double {
     val grades = listOf(grade1.toDouble(), grade2.toDouble(), grade3.toDouble())
     return grades.average()
 }
-

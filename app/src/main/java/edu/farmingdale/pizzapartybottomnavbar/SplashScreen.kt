@@ -25,25 +25,31 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavHostController) {
 
-    val scale= remember {
-        Animatable(0f, 1f)
+    val scale = remember {
+        Animatable(0f)
     }
     LaunchedEffect(key1 = true) {
         scale.animateTo(
             targetValue = 0.5f,
-            animationSpec = tween(durationMillis = 1000,0, easing = {
-                OvershootInterpolator(2f).getInterpolation(it)
-            }
-            ))
+            animationSpec = tween(
+                durationMillis = 1000,
+                delayMillis = 0,
+                easing = {
+                    OvershootInterpolator(2f).getInterpolation(it)
+                }
+            )
+        )
         delay(3000)
         navController.navigate(BottomNavigationItems.PizzaScreen.route)
     }
-
-    Column (modifier = Modifier
-        .wrapContentSize(Alignment.Center)){
-        Image(painter = painterResource(id = R.drawable.fsclogo), contentDescription ="" )
+    // my solution todo1:
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.fsclogo),
+            contentDescription = ""
+        )
     }
 }
-
-
-

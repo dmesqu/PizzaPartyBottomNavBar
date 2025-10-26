@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Slider
@@ -32,30 +31,42 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Screen3() {
-    var sliderValue by remember { mutableStateOf(0.5f) }
+    var sliderValue by remember { mutableStateOf(20f) } // base font size
     var chkd by remember { mutableStateOf(true) }
-
-
     val context = LocalContext.current
-    Column ( modifier = Modifier.padding(horizontal = 20.dp).fillMaxSize(),
+    Column(
+        // my solution todo3:
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    listOf(
+                        Color(0xFFEFF3FF),
+                        Color(0xFFDCE6FF)
+                    )
+                )
+            )
+            .padding(horizontal = 20.dp, vertical = 24.dp),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally){
-        Slider(value = sliderValue, onValueChange = { sliderValue=it }, Modifier.fillMaxWidth()
-            , enabled = chkd)
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Slider(
+            value = sliderValue,
+            onValueChange = { sliderValue = it },
+            valueRange = 10f..50f,
+            modifier = Modifier.fillMaxWidth(),
+            enabled = chkd
+        )
+        // my solution todo2:
+        Text(fontSize = sliderValue.sp, text = "Second Screen")
 
-        Text (fontSize = 20.sp, text = "Second Screen" )
-
-        Button(onClick = { val newInt = Intent(Intent.ACTION_VIEW)
+        Button(onClick = {
+            val newInt = Intent(Intent.ACTION_VIEW)
             newInt.setData(Uri.parse("tel:6314202000"))
-            context.startActivity(newInt) }) {
-            Text(fontSize = 20.sp, text ="Call me")
+            context.startActivity(newInt)
+        }) {
+            Text(fontSize = 20.sp, text = "Call me")
         }
-
-        Checkbox(checked = chkd, onCheckedChange = { chkd=it }, modifier = Modifier.padding(10.dp))
-
+        Checkbox(checked = chkd, onCheckedChange = { chkd = it }, modifier = Modifier.padding(10.dp))
     }
-
 }
-
-
-
